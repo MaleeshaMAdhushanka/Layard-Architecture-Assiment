@@ -14,7 +14,7 @@ public class OrderDetailIDAOImpl implements OrderDetailDAO {
     @Override
     public boolean saveOrderDetail(String orderId, List<OrderDetailDTO> orderDetails) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO OrderDetails VALUES (?,?,?,?)");
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO `OrderDetails` VALUES (?,?,?,?)");
 
         for (OrderDetailDTO detail : orderDetails) {
             stm.setString(1, orderId);

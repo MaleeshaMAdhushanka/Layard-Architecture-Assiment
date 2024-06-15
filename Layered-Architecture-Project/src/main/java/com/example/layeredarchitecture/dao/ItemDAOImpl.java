@@ -52,8 +52,8 @@ public class ItemDAOImpl implements ItemDAO {
         pstm.setString(2, itemDTO.getDescription());
         pstm.setBigDecimal(3, itemDTO.getUnitPrice());
         pstm.setString(4, String.valueOf(itemDTO.getQtyOnHand()));
-        pstm.executeUpdate();
-        return false;
+       return pstm.executeUpdate() > 0;
+
     }
     @Override
     public boolean exitItem(String code) throws SQLException, ClassNotFoundException {

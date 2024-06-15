@@ -55,6 +55,8 @@ public class PlaceOrderFormController {
     private CustomerDAOImpl customerDAO = new CustomerDAOImpl();
      private ItemDAOImpl itemDAO = new ItemDAOImpl();
      private OrderDAOImpl orderDAO = new OrderDAOImpl();
+
+
      private OrderDetailDAO orderDetailDAO = new OrderDetailIDAOImpl();
 
     public void initialize() {
@@ -248,7 +250,6 @@ public class PlaceOrderFormController {
 //            Statement stm = connection.createStatement();
 //            ResultSet rst = stm.executeQuery("SELECT * FROM Item");
 
-
             ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItem();
 
             for (ItemDTO item : itemDTOS) {
@@ -335,6 +336,7 @@ public class PlaceOrderFormController {
         if (b) {
             new Alert(Alert.AlertType.INFORMATION, "Order has been placed successfully").show();
         } else {
+            System.out.println("hiiii");
             new Alert(Alert.AlertType.ERROR, "Order has not been placed successfully").show();
         }
 
@@ -354,12 +356,13 @@ public class PlaceOrderFormController {
 //           connection = DBConnection.getDbConnection().getConnection();
 //            PreparedStatement stm = connection.prepareStatement("SELECT oid FROM `Orders` WHERE oid=?");
 //            stm.setString(1, orderId);
-//
+
             /*if order id already exist*/
             if (orderDAO.exitOrder(orderId)) {
                 return  false;
             }
-            if (orderDAO.saveOrder(orderDTO)) {
+
+            if (!orderDAO.saveOrder(orderDTO)) {
                 return false;
             }
 

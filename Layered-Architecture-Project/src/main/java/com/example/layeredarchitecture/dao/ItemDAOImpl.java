@@ -15,7 +15,7 @@ public class ItemDAOImpl implements ItemDAO {
 
         ArrayList<ItemDTO> allItems = new ArrayList<>();
         while (rst.next()){
-              allItems.add(new ItemDTO(
+            allItems.add(new ItemDTO(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getBigDecimal(3),
@@ -24,7 +24,7 @@ public class ItemDAOImpl implements ItemDAO {
         }
         return allItems;
     }
-   @Override
+    @Override
     public void deleteItem(String code) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
@@ -52,7 +52,7 @@ public class ItemDAOImpl implements ItemDAO {
         pstm.setString(2, itemDTO.getDescription());
         pstm.setBigDecimal(3, itemDTO.getUnitPrice());
         pstm.setString(4, String.valueOf(itemDTO.getQtyOnHand()));
-       return pstm.executeUpdate() > 0;
+        return pstm.executeUpdate() > 0;
 
     }
     @Override
@@ -64,7 +64,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     }
     @Override
-    public  ResultSet generateNewId() throws SQLException, ClassNotFoundException {
+    public ResultSet generateNewId() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
         return  rst;

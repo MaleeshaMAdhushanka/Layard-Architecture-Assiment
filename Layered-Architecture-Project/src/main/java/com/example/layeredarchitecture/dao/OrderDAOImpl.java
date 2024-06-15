@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class OrderDAOImpl implements  OderDAO {
     @Override
-    public String generateNewOrderID() throws SQLException, ClassNotFoundException {
+    public String generateNewOrderId() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT oid FROM `Orders` ORDER BY oid DESC LIMIT 1;");

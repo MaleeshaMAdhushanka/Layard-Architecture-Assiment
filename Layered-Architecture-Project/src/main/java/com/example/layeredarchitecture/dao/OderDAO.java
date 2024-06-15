@@ -5,7 +5,7 @@ import com.example.layeredarchitecture.model.OrderDTO;
 import java.sql.SQLException;
 
 public interface OderDAO {
-      String generateNewOrderID() throws SQLException, ClassNotFoundException;
+      String generateNewOrderId() throws SQLException, ClassNotFoundException;
 
       boolean exitOrder(String orderId) throws SQLException, ClassNotFoundException;
 

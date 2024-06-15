@@ -11,7 +11,7 @@ public interface ItemDAO {
      void deleteItem(String code) throws SQLException, ClassNotFoundException;
 
      void saveItem(ItemDTO item) throws SQLException, ClassNotFoundException;
-        //Save Item
+
 
      boolean updateItem(ItemDTO item) throws SQLException, ClassNotFoundException;
 

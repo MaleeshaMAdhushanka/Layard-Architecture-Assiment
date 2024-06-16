@@ -71,6 +71,10 @@ public class ManageItemsFormController {
 
     private void loadAllItems() {
         tblItems.getItems().clear();
+
+//         Connection connection = DBConnection.getDbConnection().getConnection();
+//            Statement stm = connection.createStatement();
+//            ResultSet rst = stm.executeQuery("SELECT * FROM Item");
         try {
             ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItems();
 
@@ -137,6 +141,10 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
+//             Connection connection = DBConnection.getDbConnection().getConnection();
+//            PreparedStatement pstm = connection.prepareStatement("DELETE FROM Item WHERE code=?");
+//            pstm.setString(1, code);
+//            pstm.executeUpdate();
             itemDAO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -177,7 +185,13 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-
+//                Connection connection = DBConnection.getDbConnection().getConnection();
+//                PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
+//                pstm.setString(1, code);
+//                pstm.setString(2, description);
+//                pstm.setBigDecimal(3, unitPrice);
+//                pstm.setInt(4, qtyOnHand);
+//                pstm.executeUpdate();
 
                 ItemDTO itemDTO = new ItemDTO(code,description,unitPrice,qtyOnHand);
                 itemDAO.saveItem(itemDTO);
@@ -221,6 +235,8 @@ public class ManageItemsFormController {
     private String generateNewId() {
         try {
             ResultSet rst = itemDAO.generateNewId();
+//             Connection connection = DBConnection.getDbConnection().getConnection();
+//            ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
 
             if (rst.next()) {
                 String id = rst.getString("code");

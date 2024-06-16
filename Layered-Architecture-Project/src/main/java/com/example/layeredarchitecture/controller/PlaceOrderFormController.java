@@ -103,7 +103,7 @@ public class PlaceOrderFormController {
                 /*Search Customer*/
                 try {
                     if (!existCustomer(newValue + "")) {
-//                            "There is no such customer associated with the id " + id
+
                         new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                     }
 
@@ -130,15 +130,20 @@ public class PlaceOrderFormController {
                 /*Find Item*/
                 try {
                     if (!existItem(newItemCode + "")) {
-//                        throw new NotFoundException("There is no such item associated with the id " + code);
+
                     }
+//                    Connection connection = DBConnection.getDbConnection().getConnection();
+//                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE code=?");
+//                    pstm.setString(1, newItemCode + "");
+//                    ResultSet rst = pstm.executeQuery();
+//                    rst.next();
 
                     ItemDTO item = itemDAO.findItem(newItemCode);
 
                     txtDescription.setText(item.getDescription());
                     txtUnitPrice.setText(item.getUnitPrice().setScale(2).toString());
 
-//                    txtQtyOnHand.setText(tblOrderDetails.getItems().stream().filter(detail-> detail.getCode().equals(item.getCode())).<Integer>map(detail-> item.getQtyOnHand() - detail.getQty()).findFirst().orElse(item.getQtyOnHand()) + "");
+
                     Optional<OrderDetailTM> optOrderDetail = tblOrderDetails.getItems().stream().filter(detail -> detail.getCode().equals(newItemCode)).findFirst();
                     txtQtyOnHand.setText((optOrderDetail.isPresent() ? item.getQtyOnHand() - optOrderDetail.get().getQty() : item.getQtyOnHand()) + "");
 
@@ -323,11 +328,10 @@ public class PlaceOrderFormController {
                 return false;
             }
 
-            //if not saved
+            // not saved
             if (!oderDAO.saveOrder(orderDTO)) {
                 return false;
             }
-
             return orderDetailDAO.saveOrderDetail(orderId, orderDetails);
         } catch (SQLException throwables) {
             throwables.printStackTrace();

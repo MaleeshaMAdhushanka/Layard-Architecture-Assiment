@@ -164,8 +164,6 @@ public class ManageCustomersFormController {
 
                 customerDAO.saveCustomer(customerDTO);
 
-
-
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to save the customer " + e.getMessage()).show();
@@ -188,7 +186,6 @@ public class ManageCustomersFormController {
 //                pstm.executeUpdate();
 
                 CustomerDTO customerDTO = new CustomerDTO(id, name, address);
-
                 customerDAO.updateCustomer(customerDTO);
 
             } catch (SQLException e) {

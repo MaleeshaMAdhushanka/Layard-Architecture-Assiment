@@ -54,10 +54,9 @@ public class PlaceOrderFormController {
 
     private CustomerDAO customerDAO = new CustomerDAOImpl();
     private ItemDAO itemDAO = new ItemDAOImpl();
-    OderDAO oderDAO = new OrderDAOImpl();
-    OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
+   private OderDAO oderDAO = new OrderDAOImpl();
 
-
+    private OrderDetailDAO orderDetailDAO = new OrderDetailDAOImpl();
 
     public void initialize(){
 
@@ -179,7 +178,7 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.exitItem(code);
+        return itemDAO.existItem(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
@@ -199,7 +198,6 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-
             ArrayList<CustomerDTO> customerDTOS = customerDAO.loadAllCustomer();
 
             for (CustomerDTO customer : customerDTOS) {
@@ -216,7 +214,7 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItem();
+            ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItems();
 
             for (ItemDTO item : itemDTOS) {
                 cmbItemCode.getItems().add(item.getCode());
@@ -288,6 +286,7 @@ public class PlaceOrderFormController {
     }
 
     private void enableOrDisablePlaceOrderButton() {
+        System.out.println("Hiii");
         btnPlaceOrder.setDisable(!(cmbCustomerId.getSelectionModel().getSelectedItem() != null && !tblOrderDetails.getItems().isEmpty()));
     }
 
@@ -319,7 +318,6 @@ public class PlaceOrderFormController {
 
         try {
             /*if order id already exist*/
-
             if (oderDAO.exitOrder(orderId)) {
                 return false;
             }

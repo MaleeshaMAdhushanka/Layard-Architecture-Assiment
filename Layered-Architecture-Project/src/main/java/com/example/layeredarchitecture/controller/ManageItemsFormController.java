@@ -25,8 +25,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 public class ManageItemsFormController {
@@ -74,7 +72,7 @@ public class ManageItemsFormController {
     private void loadAllItems() {
         tblItems.getItems().clear();
         try {
-            ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItem();
+            ArrayList<ItemDTO> itemDTOS = itemDAO.loadAllItems();
 
             for (ItemDTO item : itemDTOS) {
                 tblItems.getItems().add(new ItemTM(
@@ -180,6 +178,7 @@ public class ManageItemsFormController {
                 }
                 //Save Item
 
+
                 ItemDTO itemDTO = new ItemDTO(code,description,unitPrice,qtyOnHand);
                 itemDAO.saveItem(itemDTO);
 
@@ -217,33 +216,25 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        return itemDAO.exitItem(code);
+        return itemDAO.existItem(code);
     }
-
-
     private String generateNewId() {
         try {
-             itemDAO.generateNewId();
+            ResultSet rst = itemDAO.generateNewId();
 
+            if (rst.next()) {
+                String id = rst.getString("code");
+                int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
+                return String.format("I00-%03d", newItemId);
+            } else {
+                return "I00-001";
+            }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
-        if (tblItems.getItems().isEmpty()) {
-            return "I00-001";
-        } else {
-            String id = getLastItemId();
-            int newItemId = Integer.parseInt(id.replace("I00-", "")) + 1;
-            return String.format("I00-%03d", newItemId);
-            
-        }
-    }
-    public String getLastItemId(){
-        List<ItemTM> tempItemList = new ArrayList<>(tblItems.getItems());
-        Collections.sort(Collections.unmodifiableList(tempItemList));
-        return tempItemList.get(tempItemList.size() -1).getCode();
+        return "I00-001";
     }
 }
+
